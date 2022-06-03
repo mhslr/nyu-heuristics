@@ -21,6 +21,17 @@ def fun2rec(count):
 # print('a here', a)
 fun2rec(0)
 
+def mysum(n):
+    if n == 0:
+        return 0
+    # sum of 1..n
+    # assuming we know sum 1..n-1
+    x = mysum(n-1)  # sum 1 .. n-1
+    val = x + n
+    return val
+
+
+
 
 # write a function that computes the nth fibonacci number
 
