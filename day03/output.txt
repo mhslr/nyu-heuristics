@@ -1,3 +1,4 @@
 most text files end with a linebreak: 
 Nothing too interesting
 This is just text
+hi
