@@ -1,0 +1,3 @@
+This is just text
+Nothing too interesting
+most text files end with a linebreak: 
