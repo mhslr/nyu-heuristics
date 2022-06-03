@@ -1,17 +1,34 @@
 
-def funname(arg):
+def fun1(arg):
+    # global x
     # do smth
-    x = 5
-    return x
+    print(arg)
+    arg = 5
+    # x is only defined inside of fun1
+    return arg
 
-def funname2(arg1, arg2):
-    # do smth
-    return arg1 + arg2
+def fun2rec(count):
+    if count > 5:
+        return
+    print(' '*count + 'in', count)
+    fun2rec(count+1)
+    print(' '*count + 'out', count)
+    # return None
+
+# x = 1
+# a = fun1("hello")
+# a = fun1(x)
+# print('a here', a)
+fun2rec(0)
 
 
 # write a function that computes the nth fibonacci number
 
 def fib(n):
     ...
-    return 5
+    return None
+
+# 0 1 2 3 4 5 6 < indices
+# 0 1 1 2 3 5 8 < values
+
 
