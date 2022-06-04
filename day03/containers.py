@@ -40,13 +40,9 @@ print()
 # dict: mapping key -> value
 
 my_empty_dict = {}  # or dict()
-my_dict = {
-    1: 4,
-    6: "hey",
-    "hello": 3
-}
+my_dict = {1: 4, 6: "hey", "hello": 3}
 print(my_dict)
-is_6_in_dict =  6 in my_dict
+is_6_in_dict = 6 in my_dict
 print("test membership ", is_6_in_dict)
 print("keys are indices: hello ->", my_dict["hello"])
 
@@ -62,27 +58,27 @@ print()
 # records
 
 ## tuple
-point1 = (1,2)
+point1 = (1, 2)
 assert point1[0] == 1
 assert point1[1] == 2
 
 # can have arbitrary nb of items
 point1 = ()  # or tuple()
-point1 = (3 * 4,) # 1 item
-point1 = (1,1,2,3,45)
+point1 = (3 * 4,)  # 1 item
+point1 = (1, 1, 2, 3, 45)
 # point1[0] = 3  # Error!
-print('point1', point1)
+print("point1", point1)
 
 
 ## namedtuple  # same as tuple, but w names
 from collections import namedtuple
 from dataclasses import dataclass
 
-PointNT = namedtuple('PointNT', ['x','y'])
-point2 = PointNT(1,2)
+PointNT = namedtuple("PointNT", ["x", "y"])
+point2 = PointNT(1, 2)
 assert point2.x == 1
 assert point2.y == 2
-print('point2', point2)
+print("point2", point2)
 
 ## dataclasses  # mutable
 @dataclass
@@ -90,8 +86,8 @@ class PointData:
     x: int
     y: int
 
-## these are mutable
-point3 = PointData(1,2)
-point3.x = 3
-print('point3', point3)
 
+## these are mutable
+point3 = PointData(1, 2)
+point3.x = 3
+print("point3", point3)

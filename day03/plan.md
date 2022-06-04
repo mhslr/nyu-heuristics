@@ -19,4 +19,3 @@ efficiency
 
 change assignment
 
-statistics

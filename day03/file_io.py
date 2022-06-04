@@ -2,9 +2,9 @@
 
 txt = open("sample.txt").read()  # 1 string
 lines = open("sample.txt").readlines()  # list of strings
-print('lines', lines)
+print("lines", lines)
 
-for line in open("sample.txt"): 
+for line in open("sample.txt"):
     # same as
     # for line in open().readlines():
     print(f"{line!r}")
@@ -23,8 +23,8 @@ for line in lines[::-1]:
 fp.close()
 
 # with will close fp automatically
-with open('output.txt', 'a') as fp5:
-    fp5.write('hi\n')
+with open("output.txt", "a") as fp5:
+    fp5.write("hi\n")
 
 # context manager: auto cleanup
 
@@ -35,4 +35,3 @@ with open("sample.txt") as fp2:
     # reset
     fp2.seek(30)
     print(len(fp2.read()))
-
