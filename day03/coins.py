@@ -93,8 +93,9 @@ def score(req_coins, N):
     return num / den
 
 
-# Compute score of a certain denomination
-def score_all(max_change, N, denos, method="greedy"):
+# Expected nb of coins for a given set of denominations
+# over change amounts in range 0..max_change-1
+def expected_ncoins(max_change, N, denos, method="greedy"):
     if method == "greedy":
         req_coins = []
         # req_coins[change] = min nb of coins to get change
@@ -123,7 +124,7 @@ def solve(max_change, N, method):
         for c3 in range(c2 + 1, max_change):
             for c4 in range(c3 + 1, max_change):
                 denos = (c1, c2, c3, c4)
-                new_score = score_all(max_change, N, denos, method)
+                new_score = expected_ncoins(max_change, N, denos, method)
                 # print(denos, new_score)
                 if new_score < best_score:
                     best_score = new_score
