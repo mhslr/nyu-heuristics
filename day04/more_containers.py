@@ -43,20 +43,15 @@ def invert(person_to_dog: Dict):
     >>> invert({1: 3, 24: 4})
     {3: 1, 4: 24}
     """
-    return {
-        dog: person
-        for person, dog in person_to_dog.items()
-    }
+    # in one expression
+    return {dog: person for person, dog in person_to_dog.items()}
 
+    # the imperative way
     dog_to_person = {}  # starts empty
     for person, dog in person_to_dog.items():
         dog_to_person[dog] = person
 
     return dog_to_person
-
-
-
-        
 
 
 def keyof(k_to_v: Dict, val):

@@ -16,7 +16,7 @@ if "Dennis" not in relatives:
     relatives["Santa"] = "dog"
 
 print()
-print(f'{relatives=}')
+print(f"{relatives=}")
 for member in list(relatives.keys()):
     print(member, "is a", relatives[member])
 
