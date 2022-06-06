@@ -8,13 +8,18 @@ relatives = {"Lisa": "daughter", "Bart": "son", "Marge": "mother", "Homer": "fat
 for member in list(relatives.keys()):
     print(member, "is a", relatives[member])
 
+print()
 print("Now we'll add in the dog")
+print()
 
-if not "Dennis" in list(relatives.keys()):
+if "Dennis" not in relatives:
     relatives["Santa"] = "dog"
 
+print()
+print(f'{relatives=}')
 for member in list(relatives.keys()):
     print(member, "is a", relatives[member])
+
 
 print("Now we'll add more properties of Bart:")
 

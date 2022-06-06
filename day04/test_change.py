@@ -69,7 +69,7 @@ def test_bruteforce_greedy(exact_change, a, b, c, d):
         key=sum,
     )
     ### star notation flattens arguments: *denom -> a, b, c, d
-    greedy = compute_greedy(exact_change, *denom)
-    # greedy = compute_greedy_perm(exact_change, *denom)
+    # greedy = compute_greedy(exact_change, *denom)
+    greedy = compute_greedy_perm(exact_change, *denom)
     msg = f"\n\n{exact_change=} {denom=} {brute=} {greedy=}\n"
     assert sum(brute) == sum(greedy), msg
