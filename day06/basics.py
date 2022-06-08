@@ -1,3 +1,7 @@
+
+
+
+
 (1 + 2) * 3 / 4
 dividend = 64 // 7
 remainder = 64 % 7
@@ -9,7 +13,8 @@ s = "hello"
 s[2:5]  # substring "llo"
 s[::-1] # reversed: "olleh"
 "abc" + "def"  # "abcdef"
-"123 354".split()  # ["123", "354"]
+"  123     354   ".split()  # ["123", "354"]
+"123  354".split(" ")  # ["123", "", "354"]
 "+".join(["123", "354", "abc"])  # "123+354+abc"
 print(f"64 = {dividend} * 7 + {remainder}")
 # prints: hello 64 = 9 * 7 + 1
@@ -22,6 +27,7 @@ empty_d = {}
 d = {"a": 1, "b": 2}
 d["hi"] = 111  # inserts "hi" -> 111
 d["hi"] = 333  # remaps  "hi" -> 333
+print("hi" in d)  # checks if a key is in d
 d["hi"]        # get value of "hi": 333
 del d["hi"]    # removes "hi" from d
 
