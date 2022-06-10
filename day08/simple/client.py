@@ -11,8 +11,13 @@ print("client ready")
 # time.sleep(1)
 while True:
     # pls input name
-    input("continue ?")
-    msg1 = {"name": "Matthias", "type": "hello"}
-    socket.send_json(msg1)
-    msg2 = socket.recv_json()
-    print(msg2)
+    name = input("whats your name? ")
+    request_msg = {"name": name, "type": "hello"}
+    socket.send_json(request_msg)
+    answer_msg = socket.recv_json()
+    print(answer_msg)
+    if answer_msg["status"] == "ok":
+        print("good")
+        break
+    else:
+        print("give it another shot")
