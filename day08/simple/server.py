@@ -9,6 +9,12 @@ socket = context.socket(zmq.REP)
 socket.bind("tcp://*:%d" % PORT)
 
 def answer(msg):
+    """
+    should respond whether the name is
+    - too short <4
+    - too long >10 or
+    - the right size 
+    """
     print(msg)
     if msg["type"] == "hello":
         return {"msg": "hello " + msg["name"]}
