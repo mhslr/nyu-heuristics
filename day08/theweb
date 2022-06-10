@@ -1,0 +1,28 @@
+
+
+DNS: Domain Name System
+f(url domain) -> ip address
+wiki.org      -> 31.102.123.123
+
+webbrowser       server
+wikipedia.org
+     |		    |
+     |  GET >	    |
+     |		    | process
+     |		    |
+     |	< answer    |
+     |		    |
+
+XML HTML
+<body>
+ <child1> hello </child1>
+ <child2> hello </child2>
+ <img src="..."></img>
+</body>
+
+JSON
+{"body": [
+  {"type": "child1"},
+  {"type": "child2"},
+  {"type": "img", "src": "..."}
+]}
