@@ -14,6 +14,8 @@ def answer(msg):
     - too short <4
     - too long >10 or
     - the right size 
+    >>> answer({"type": "hello", "name": "Matthias"})
+    {"status": "ok", "msg": "cool, this name is of the right length"}
     """
     print(msg)
     if msg["type"] == "hello":
