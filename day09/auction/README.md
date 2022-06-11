@@ -14,6 +14,7 @@ Server-client communicate using JSON.
   - bid: bid has been placed
   - wait: client should wait for others
   - error: something went wrong
+  - done: end of auction, client should exit
 
 ## messages' content
 
