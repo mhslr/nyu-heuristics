@@ -72,7 +72,7 @@ while True:
     if response["type"] == "wait":
         time.sleep(0.1)
     if response["type"] == "info":
-
+        # we recieved the latest info, we can compute and place our bid
         bid = compute_bid(response)
         bid_request = {"type": "bid", "name": name, "bid": bid}
         socket.send_json(bid_request)

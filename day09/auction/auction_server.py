@@ -61,6 +61,7 @@ def init_player_info(player_name):
 
 def answer_phase1(req):
     """
+    In phase 1, we wait for num_players to connect.
     >>> answer_phase1({"type": "info", "name": "alice"})
     {"type": "wait", "msg": "ok, waiting for all players to join"}
     """
@@ -87,6 +88,10 @@ while len(players) < num_bidders:
 
 def answer_phase2(req, cur_round, bids):
     """
+    In phase 2, we accept info and bid requests.
+    To info we reply with the current state if the player needs to play
+    or with wait if the player should wait for the next round.
+    Bids are capped by the player's budget.
     >>> answer_phase2({"type": "info", "name": "alice"})
     sample_info
     >>> answer_phase2({"type": "info", "name": "alice"})
@@ -96,7 +101,7 @@ def answer_phase2(req, cur_round, bids):
     >>> answer_phase2({"type": "bid", "name": "alice", "bid": 999999999})
     {"type": "bid", "msg": "entire budget", "bid": 42}
     """
-    global players, items
+    global players, items, item_types
     cur_player = req["name"]
     if req["type"] == "info":
         if cur_player in bids:
@@ -119,7 +124,7 @@ def answer_phase2(req, cur_round, bids):
         bids[cur_player] = bid
         return {
             "type": "bid",
-            "msg": ("got it" if bid < budget else "entire budget"),
+            "msg": ("got it" if bid < budget else "all in"),
             "bid": bid,
         }
 
