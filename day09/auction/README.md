@@ -4,6 +4,9 @@ In each round, every player places one bid without knowing others' bids.
 The maximum bid wins (breaking ties at random).
 Server-client communicate using JSON.
 
+# Objective
+Your job is to modify the function `compute_bid` to best place your bid.
+
 ## message types
 
 - client to server:

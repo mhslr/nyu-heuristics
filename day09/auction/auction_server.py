@@ -7,7 +7,8 @@ num_bidders = 3
 needed_to_win = 3
 init_budget = 100
 item_types = ["Picasso", "Van_Gogh", "Rembrandt", "Da_Vinci"]
-items = random.choices(item_types, k=num_bidders * needed_to_win * len(item_types))
+items = random.choices(item_types, k=num_bidders * needed_to_win * len(item_types) + 1)
+history = []
 
 # timing
 between_rounds = 1
@@ -18,37 +19,77 @@ socket = context.socket(zmq.REP)
 socket.bind("tcp://*:%d" % PORT)
 
 sample_info = {
-    "type": "info",
-    "cur_round": 5,
+    "cur_round": 10,
+    "history": [
+        {"bid": 76, "item": "Van_Gogh", "player": "charlie"},
+        {"bid": 79, "item": "Da_Vinci", "player": "bob"},
+        {"bid": 11, "item": "Van_Gogh", "player": "bob"},
+        {"bid": 92, "item": "Da_Vinci", "player": "alice"},
+        {"bid": 2, "item": "Picasso", "player": "bob"},
+        {"bid": 10, "item": "Picasso", "player": "charlie"},
+        {"bid": 9, "item": "Van_Gogh", "player": "charlie"},
+        {"bid": 6, "item": "Picasso", "player": "bob"},
+        {"bid": 6, "item": "Rembrandt", "player": "alice"},
+        {"bid": 3, "item": "Picasso", "player": "charlie"},
+    ],
     "item_types": ["Picasso", "Van_Gogh", "Rembrandt", "Da_Vinci"],
     "items": [
-        "Rembrandt",
-        "Rembrandt",
-        "Picasso",
-        "Van_Gogh",
-        "Rembrandt",
-        "Van_Gogh",
         "Van_Gogh",
         "Da_Vinci",
         "Van_Gogh",
+        "Da_Vinci",
+        "Picasso",
+        "Picasso",
+        "Van_Gogh",
+        "Picasso",
+        "Rembrandt",
+        "Picasso",
+        "Picasso",
+        "Da_Vinci",
+        "Da_Vinci",
+        "Van_Gogh",
+        "Van_Gogh",
+        "Van_Gogh",
+        "Rembrandt",
+        "Van_Gogh",
+        "Rembrandt",
+        "Van_Gogh",
+        "Rembrandt",
+        "Rembrandt",
+        "Picasso",
+        "Picasso",
+        "Picasso",
+        "Rembrandt",
+        "Rembrandt",
+        "Da_Vinci",
+        "Da_Vinci",
+        "Rembrandt",
+        "Van_Gogh",
+        "Da_Vinci",
+        "Picasso",
+        "Da_Vinci",
+        "Rembrandt",
+        "Picasso",
+        "Rembrandt",
     ],
-    "self": {
-        "budget": 11,
-        "item_count": {"Da_Vinci": 0, "Picasso": 0, "Rembrandt": 1, "Van_Gogh": 0},
-        "name": "alice",
-    },
     "others": [
         {
-            "budget": 16,
-            "item_count": {"Da_Vinci": 0, "Picasso": 0, "Rembrandt": 2, "Van_Gogh": 0},
+            "budget": 2,
+            "item_count": {"Da_Vinci": 1, "Picasso": 2, "Rembrandt": 0, "Van_Gogh": 1},
             "name": "bob",
         },
         {
-            "budget": 21,
-            "item_count": {"Da_Vinci": 0, "Picasso": 1, "Rembrandt": 0, "Van_Gogh": 1},
-            "name": "charlie",
+            "budget": 2,
+            "item_count": {"Da_Vinci": 1, "Picasso": 0, "Rembrandt": 1, "Van_Gogh": 0},
+            "name": "alice",
         },
     ],
+    "self": {
+        "budget": 2,
+        "item_count": {"Da_Vinci": 0, "Picasso": 2, "Rembrandt": 0, "Van_Gogh": 2},
+        "name": "charlie",
+    },
+    "type": "info",
 }
 
 
@@ -103,7 +144,7 @@ def answer_phase2(req, cur_round, bids):
     >>> answer_phase2({"type": "bid", "name": "alice", "bid": 999999999})
     {"type": "bid", "msg": "entire budget", "bid": 42}
     """
-    global players, items, item_types
+    global players, items, item_types, history
     cur_player = req["name"]
     if req["type"] == "info":
         if cur_player in bids:
@@ -113,6 +154,7 @@ def answer_phase2(req, cur_round, bids):
             "item_types": item_types,
             "items": items,
             "cur_round": cur_round,
+            "history": history,
             "self": players[cur_player],
             "others": [info for name, info in players.items() if name != cur_player],
         }
@@ -147,6 +189,7 @@ for cur_round, item in enumerate(items):
 
     players[winner]["budget"] -= bid
     players[winner]["item_count"][item] += 1
+    history.append({"item": item, "bid": bid, "player": winner})
 
     if players[winner]["item_count"][item] == needed_to_win:
         break  # keep last value for winner
