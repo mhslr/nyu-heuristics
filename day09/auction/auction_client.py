@@ -1,3 +1,4 @@
+from pprint import pprint
 import zmq
 import time
 import random
@@ -8,6 +9,7 @@ socket = context.socket(zmq.REQ)
 socket.connect("tcp://localhost:%d" % PORT)
 # socket.connect("tcp://2.tcp.ngrok.io:17918")
 name = input("what's your name? ")
+bot = "n" not in input("are you a bot? (Y/n) ").lower()
 
 sample_info = {
     "type": "info",
@@ -58,24 +60,49 @@ def compute_bid(info):
     return round(bid)
 
 
+def ask_bid(info):
+    """
+    >>> ask_bid(sample_info)
+    5
+    """
+    rd = info["cur_round"]
+    info["items"] = info["items"][rd : rd + 10]  # too long to print
+    pprint(info)
+    return int(input("place your bid (integer): "))
+
+
+def done_msg(player, winner):
+    if player == winner:
+        return f"Congrats {player}, you won!"
+    else:
+        return f"Too bad, you lost to {winner}."
+
+
 while True:
     request = {"type": "info", "name": name}
     socket.send_json(request)
     response = socket.recv_json()
 
-    if response["type"] == "done":
-        if response["winner"] == name:
-            print("You won")
-        else:
-            print("You lost to", response["winner"])
-        break
-    if response["type"] == "wait":
-        time.sleep(0.1)
     if response["type"] == "info":
+        info = response.copy()
         # we recieved the latest info, we can compute and place our bid
-        bid = compute_bid(response)
-        bid_request = {"type": "bid", "name": name, "bid": int(bid)}
+        if bot:
+            bid = int(compute_bid(info))
+        else:
+            bid = ask_bid(info)
+
+        bid_request = {"type": "bid", "name": name, "bid": bid}
         socket.send_json(bid_request)
         bid_response = socket.recv_json()
         # check that there was no error
         assert bid_response["type"] == "bid"
+
+    elif response["type"] == "wait":
+        time.sleep(0.1)
+
+    elif response["type"] == "done":
+        print(done_msg(name, response["winner"]))
+        break
+
+    else:
+        print("ERROR: unrecognized type", response)

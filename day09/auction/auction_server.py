@@ -85,6 +85,7 @@ while len(players) < num_bidders:
     request = socket.recv_json()
     response = answer_phase1(request)
     socket.send_json(response)
+print()
 
 
 def answer_phase2(req, cur_round, bids):
@@ -127,7 +128,7 @@ def answer_phase2(req, cur_round, bids):
 
 
 for cur_round, item in enumerate(items):
-    print(f"new round, competing for: {item}")
+    print(f"round {cur_round}, competing for: {item}")
     bids = {}
     while len(bids) < len(players):
         request = socket.recv_json()
@@ -139,6 +140,7 @@ for cur_round, item in enumerate(items):
 
     bid, _, winner = max((bid, random.random(), player) for player, bid in bids.items())
     print(f"auction won by {winner}, at ${bid}")
+    print()
 
     players[winner]["budget"] -= bid
     players[winner]["item_count"][item] += 1
@@ -146,7 +148,9 @@ for cur_round, item in enumerate(items):
     if players[winner]["item_count"][item] == needed_to_win:
         break  # keep last value for winner
 
-print(f"Auction terminated winner {winner}")
+    time.sleep(1)
+
+print(f"Auction game finished, the winner is {winner}!")
 for i in range(num_bidders):
     request = socket.recv_json()
     response = {"type": "done", "winner": winner}
