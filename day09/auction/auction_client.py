@@ -28,18 +28,18 @@ sample_info = {
         "Da_Vinci",
     ],
     "self": {
-        "budget": 11.6,
+        "budget": 11,
         "item_count": {"Da_Vinci": 0, "Picasso": 0, "Rembrandt": 1, "Van_Gogh": 0},
         "name": "alice",
     },
     "others": [
         {
-            "budget": 16.5,
+            "budget": 16,
             "item_count": {"Da_Vinci": 0, "Picasso": 0, "Rembrandt": 2, "Van_Gogh": 0},
             "name": "bob",
         },
         {
-            "budget": 21.1,
+            "budget": 21,
             "item_count": {"Da_Vinci": 0, "Picasso": 1, "Rembrandt": 0, "Van_Gogh": 1},
             "name": "charlie",
         },
@@ -55,7 +55,7 @@ def compute_bid(info):
     i = info["cur_round"]
     bid = info["self"]["budget"] * random.random()
     print(f"bidding ${bid} for a", info["items"][i])
-    return bid
+    return round(bid)
 
 
 while True:
@@ -74,7 +74,7 @@ while True:
     if response["type"] == "info":
         # we recieved the latest info, we can compute and place our bid
         bid = compute_bid(response)
-        bid_request = {"type": "bid", "name": name, "bid": bid}
+        bid_request = {"type": "bid", "name": name, "bid": int(bid)}
         socket.send_json(bid_request)
         bid_response = socket.recv_json()
         # check that there was no error

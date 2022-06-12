@@ -33,23 +33,24 @@ sample_info = {
         "Da_Vinci",
     ],
     "self": {
-        "budget": 11.6,
+        "budget": 11,
         "item_count": {"Da_Vinci": 0, "Picasso": 0, "Rembrandt": 1, "Van_Gogh": 0},
         "name": "alice",
     },
     "others": [
         {
-            "budget": 16.5,
+            "budget": 16,
             "item_count": {"Da_Vinci": 0, "Picasso": 0, "Rembrandt": 2, "Van_Gogh": 0},
             "name": "bob",
         },
         {
-            "budget": 21.1,
+            "budget": 21,
             "item_count": {"Da_Vinci": 0, "Picasso": 1, "Rembrandt": 0, "Van_Gogh": 1},
             "name": "charlie",
         },
     ],
 }
+
 
 def init_player_info(player_name):
     return {
@@ -115,12 +116,8 @@ def answer_phase2(req, cur_round, bids):
             "others": [info for name, info in players.items() if name != cur_player],
         }
     if req["type"] == "bid":
-        if not isinstance(req.get("bid"), numbers.Real):
-            print("error", req)
-            return {"type": "error", "msg": "something's wrong"}
-
         budget = players[cur_player]["budget"]
-        bid = max(0, min(budget, req["bid"]))
+        bid = max(0, min(budget, int(req["bid"])))
         bids[cur_player] = bid
         return {
             "type": "bid",
