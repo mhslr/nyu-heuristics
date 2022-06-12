@@ -9,6 +9,9 @@ init_budget = 100
 item_types = ["Picasso", "Van_Gogh", "Rembrandt", "Da_Vinci"]
 items = random.choices(item_types, k=300)
 
+# timing
+between_rounds = 1
+
 PORT = 50018
 context = zmq.Context()
 socket = context.socket(zmq.REP)
@@ -138,7 +141,8 @@ for cur_round, item in enumerate(items):
 
     print("final bids:", bids)
 
-    bid, _, winner = max((bid, random.random(), player) for player, bid in bids.items())
+    # bid, _, winner = max((bid, random.random(), player) for player, bid in bids.items())
+    bid, _, winner = max((bid, -i, player) for i, (player, bid) in enumerate(bids.items()))
     print(f"auction won by {winner}, at ${bid}")
     print()
 
@@ -148,7 +152,7 @@ for cur_round, item in enumerate(items):
     if players[winner]["item_count"][item] == needed_to_win:
         break  # keep last value for winner
 
-    time.sleep(1)
+    time.sleep(between_rounds)
 
 print(f"Auction game finished, the winner is {winner}!")
 for i in range(num_bidders):
