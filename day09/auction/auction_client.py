@@ -25,9 +25,6 @@ sample_info = {
         "Van_Gogh",
         "Da_Vinci",
         "Van_Gogh",
-        "Picasso",
-        "Da_Vinci",
-        "Da_Vinci",
     ],
     "self": {
         "budget": 11,

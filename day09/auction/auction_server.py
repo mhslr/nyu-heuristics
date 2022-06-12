@@ -7,7 +7,7 @@ num_bidders = 3
 needed_to_win = 3
 init_budget = 100
 item_types = ["Picasso", "Van_Gogh", "Rembrandt", "Da_Vinci"]
-items = random.choices(item_types, k=300)
+items = random.choices(item_types, k=num_bidders * needed_to_win)
 
 # timing
 between_rounds = 1
@@ -31,9 +31,6 @@ sample_info = {
         "Van_Gogh",
         "Da_Vinci",
         "Van_Gogh",
-        "Picasso",
-        "Da_Vinci",
-        "Da_Vinci",
     ],
     "self": {
         "budget": 11,
@@ -142,7 +139,9 @@ for cur_round, item in enumerate(items):
     print("final bids:", bids)
 
     # bid, _, winner = max((bid, random.random(), player) for player, bid in bids.items())
-    bid, _, winner = max((bid, -i, player) for i, (player, bid) in enumerate(bids.items()))
+    bid, _, winner = max(
+        (bid, -i, player) for i, (player, bid) in enumerate(bids.items())
+    )
     print(f"auction won by {winner}, at ${bid}")
     print()
 
