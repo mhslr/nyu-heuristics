@@ -159,7 +159,8 @@ def compute_bid(info):
     >>> compute_bid(sample_info)
     2
     """
-    # to use Dennis' format, uncomment lines below
+    # convert info to Dennis' format
+    # you are free to apply further preprocessing to make your life easier
     (
         itemsinauction,
         winnerarray,
