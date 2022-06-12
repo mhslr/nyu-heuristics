@@ -50,7 +50,7 @@ sample_info = {
 def compute_bid(info):
     """
     >>> compute_bid(sample_info)
-    2.3
+    5
     """
     i = info["cur_round"]
     bid = info["self"]["budget"] * random.random()
