@@ -7,7 +7,7 @@ num_bidders = 3
 needed_to_win = 3
 init_budget = 100
 item_types = ["Picasso", "Van_Gogh", "Rembrandt", "Da_Vinci"]
-items = random.choices(item_types, k=num_bidders * needed_to_win)
+items = random.choices(item_types, k=num_bidders * needed_to_win * len(item_types))
 
 # timing
 between_rounds = 1
