@@ -196,12 +196,17 @@ def done_msg(winner):
     else:
         return f"Too bad, you lost to {winner}."
 
+
 def round_msg(info):
     if info["history"]:
         last = info["history"][-1]
-        print('auction won by %s at $%d' % (last['player'], last['bid']))
+        print("auction won by %s at $%d" % (last["player"], last["bid"]))
         if is_bot:
-            print(random.choice(happy_bot if info['history'][-1]['player'] == my_name else sad_bot))
+            print(
+                random.choice(
+                    happy_bot if info["history"][-1]["player"] == my_name else sad_bot
+                )
+            )
             print()
     else:
         print("Let's go!")

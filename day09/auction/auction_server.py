@@ -9,9 +9,13 @@ init_budget = 100
 item_types = ["Picasso", "Van_Gogh", "Rembrandt", "Da_Vinci"]
 items = random.choices(item_types, k=num_bidders * needed_to_win * len(item_types) + 1)
 history = []
+# items = 'PVPRDPDDVPVPVVRRRVDRVD'
+# to_long = {t[0]: t for t in item_types}
+# items = [to_long[it] for it in items]
+
 
 # timing
-between_rounds = 1
+between_rounds = 5
 
 PORT = 50018
 context = zmq.Context()
