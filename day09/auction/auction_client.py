@@ -6,8 +6,8 @@ import random
 PORT = 50018
 context = zmq.Context()
 socket = context.socket(zmq.REQ)
-socket.connect("tcp://localhost:%d" % PORT)
-# socket.connect("tcp://2.tcp.ngrok.io:17918")
+# socket.connect("tcp://localhost:%d" % PORT)
+socket.connect("tcp://0.tcp.ngrok.io:15171")
 my_name = input("what's your name? ")
 is_bot = "n" not in input("are you a bot? (Y/n) ").lower()
 
@@ -134,11 +134,11 @@ def dennis_fmt(info):
     players = [p["name"] for p in all_p]
     mybidderid = info["self"]["name"]
     artists = info["item_types"]
-    standings = [
-        {artist: p["item_count"][artist] for artist in artists}
-        | {"money": p["budget"]}
-        for p in all_p
-    ]
+    standings = []
+    for p in all_p:
+        d1 = {artist: p["item_count"][artist] for artist in artists}
+        d1.update({"money": p["budget"]})
+        standings.append(d1)
     rd = info["cur_round"]
     return (
         itemsinauction,
