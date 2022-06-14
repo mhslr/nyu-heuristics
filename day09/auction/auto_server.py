@@ -1,5 +1,6 @@
 import random
 import strategy1
+import random_strategy
 from copy import deepcopy
 
 # rules
@@ -8,9 +9,10 @@ init_budget = 100
 item_types = ["Picasso", "Van_Gogh", "Rembrandt", "Da_Vinci"]
 
 bots = [
+    ("random1", random_strategy.compute_bid_state),
+    ("random2", random_strategy.compute_bid_state),
     ("strat1", strategy1.compute_bid_state),
     ("strat2", strategy1.compute_bid_state),
-    ("strat3", strategy1.compute_bid_state),
 ]
 
 
@@ -38,7 +40,6 @@ for i in range(100):
         "items": random.choices(
             item_types, k=num_bidders * needed_to_win * len(item_types) + 1
         ),
-        "history": [],
         "cur_round": 0,
         "history": [],
         "players": {name: init_player_info(name) for name, strat in bots},
@@ -50,9 +51,6 @@ for i in range(100):
     auction_winner = None
     for cur_round, item in enumerate(base_info["items"]):
         base_info["cur_round"] = cur_round
-
-        if auction_winner is not None:
-            break
 
         bids = []
         for name, strat in bots:
@@ -70,6 +68,7 @@ for i in range(100):
         base_info["players"][round_winner]["item_count"][item] += 1
         if base_info["players"][round_winner]["item_count"][item] == needed_to_win:
             auction_winner = round_winner
+            break
 
     print('winner:', auction_winner)
     print()
