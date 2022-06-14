@@ -3,6 +3,7 @@ import zmq
 import time
 import random
 
+sleep_dur = 0.01
 
 happy_bot = [
     "Why aren't you cheering louder?",
@@ -64,7 +65,7 @@ def play(my_name, server_url, strategy):
             assert bid_response["type"] == "bid"
 
         elif response["type"] == "wait":
-            time.sleep(0.1)
+            time.sleep(sleep_dur)
 
         elif response["type"] == "done":
             show_done_msg(my_name, response["winner"])

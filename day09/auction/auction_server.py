@@ -15,7 +15,7 @@ history = []
 
 
 # timing
-between_rounds = 5
+between_rounds = 0.01
 
 PORT = 50018
 context = zmq.Context()
