@@ -6,8 +6,8 @@ from sample_strat import compute_bid_state
 
 context = zmq.Context()
 socket = context.socket(zmq.REQ)
-socket.connect("tcp://localhost:50018")
-# socket.connect("tcp://0.tcp.ngrok.io:15171")
+# socket.connect("tcp://localhost:50018")
+socket.connect("tcp://4.tcp.ngrok.io:19796")
 my_name = input("what's your name? ")
 
 
