@@ -3,7 +3,7 @@ import random
 import time
 import zmq
 
-num_bidders = 3
+num_bidders = 2
 needed_to_win = 3
 init_budget = 100
 item_types = ["Picasso", "Van_Gogh", "Rembrandt", "Da_Vinci"]
@@ -35,19 +35,19 @@ def answer_phase1(req):
     global players
     player = req["name"]
     if req["type"] == "info":
-        if player not in players:
+        if player not in player_names:
             print(player, "joined")
-            players[player] = init_player_info(player)
+            player_names.append(player)
         return {"type": "wait", "msg": "ok, waiting for all players to join"}
     else:
         print("Error wait", player)
         return {"type": "error", "msg": "wait for everyone!"}
 
 
-players = {}  # player_name -> player_info
+player_names = []  # player_name -> player_info
 # phase1: waiting for players to join
 print(f"waiting for {num_bidders} players")
-while len(players) < num_bidders:
+while len(player_names) < num_bidders:
     request = socket.recv_json()
     response = answer_phase1(request)
     socket.send_json(response)
@@ -95,26 +95,30 @@ def answer_phase2(req, cur_round, bids):
 
 
 game_winners = []
-for game in range(10):
+for game in range(20):
+    print('gaem', game)
     items = random.choices(item_types, k=num_bidders * needed_to_win * len(item_types) + 1)
     history = []
+    players = {}
+    for player in player_names:
+        players[player] = init_player_info(player)
     for cur_round, item in enumerate(items):
-        print(f"round {cur_round}, competing for: {item}")
+        # print(f"round {cur_round}, competing for: {item}")
         bids = {}
         while len(bids) < len(players):
             request = socket.recv_json()
             response = answer_phase2(request, cur_round, bids)
             socket.send_json(response)
-            print(bids, end="\r")
+            # print(bids, end="\r")
 
-        print("final bids:", bids)
+        # print("final bids:", bids)
 
         # bid, _, winner = max((bid, random.random(), player) for player, bid in bids.items())
         bid, _, winner = max(
             (bid, -i, player) for i, (player, bid) in enumerate(bids.items())
         )
-        print(f"game {game}: auction won by {winner}, at ${bid}")
-        print()
+        # print(f"game {game}: auction won by {winner}, at ${bid}")
+        # print()
 
         players[winner]["budget"] -= bid
         players[winner]["item_count"][item] += 1

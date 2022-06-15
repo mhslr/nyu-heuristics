@@ -14,7 +14,7 @@ my_name = input("what's your name? ")
 def round_msg(info):
     if info["history"]:
         last = info["history"][-1]
-        print("auction won by %s at $%d" % (last["player"], last["bid"]))
+        # print("auction won by %s at $%d" % (last["player"], last["bid"]))
 
 
 while True:
