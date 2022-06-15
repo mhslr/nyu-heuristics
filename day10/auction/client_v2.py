@@ -23,9 +23,9 @@ while True:
     response = socket.recv_json()
 
     if response["type"] == "info":
+        info = response.copy()
         if info['cur_round'] == 0:
             state = None
-        info = response.copy()
         round_msg(info)
         # we recieved the latest info, we can compute and place our bid
         bid, state = compute_bid_state(info, state)
