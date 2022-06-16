@@ -8,7 +8,7 @@ guess nb edges
 quicksort
 treap
 maze solving DSU
-backtracking tic tac toe
+backtracking + minimax: tic tac toe
 nim games
 
 numeric methods:
