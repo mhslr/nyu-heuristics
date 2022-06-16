@@ -88,7 +88,7 @@ If f(ml) > f(mr), you know that x < mr (and f(ml) < f(mr) implies x > ml). You c
 We can simulate the evolution of this model and approximate the continuous change in these variables by stepping by small time steps: `x[n+1] = x[n] + dxdt[n] * dT`. You can see the impact of varying dT in seeing how much the solution diverges (this process is known to be cyclic).
 This formula is called the [Euler forward method](https://en.wikipedia.org/wiki/Euler_method). Better approximations are possible using [Runge-Kutta methods](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods).
 
-## ML: Text processing
+## ML: Text processing and classification
 We did not review this, some common text classification techniques are used in this [Colab notebook](https://colab.research.google.com/drive/1yZow-GIh7eKv-3smR1mFisqPVppOw82a?usp=sharing).
 Feel free to skip the first part, where the dataset is downloaded and prepared for the task.
 Our model will essentially look at the word counts as features (this representation is called Bag-of-Words or BoW) to predict the category.
