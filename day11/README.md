@@ -91,7 +91,13 @@ This formula is called the [Euler forward method](https://en.wikipedia.org/wiki/
 ## ML: Text processing
 We did not review this, some common text classification techniques are used in this [Colab notebook](https://colab.research.google.com/drive/1yZow-GIh7eKv-3smR1mFisqPVppOw82a?usp=sharing).
 Feel free to skip the first part, where the dataset is downloaded and prepared for the task.
-Our model will essentially look at the word counts as features (this representation is called Bag-of-Words or BoW), apply some weighting to value more rare words (Tfidf).
-For our model to train faster, we first reduce the dimension of our features from [voc-size, 140'000] to 100, using a Singular Value Decomposition, very similar to Principal Component Analysis.
-Then we use a Gaussian Naive Bayes model to fit and predict our data.
+Our model will essentially look at the word counts as features (this representation is called Bag-of-Words or BoW) to predict the category.
+But first we apply some transformations:
+
+- splitting and counting the words (part of TfidfVectorizer).
+- re-weighting words, to value rare ones more than the common ones (Tfidf), as they might be more specific to one category.
+- for our model to train faster, we reduce the dimension of our features from vocabulary size (140'000 distinct words) to 100, using a Singular Value Decomposition, very similar to Principal Component Analysis.
+
+Finally, we use a Gaussian Naive Bayes model to fit our data and predict the 20 classes.
 Similar results can be obtained using a Logistic Regression.
+64% accuracy is not too bad, considering that some classes were quite similar, but better results can be achieved using [Language Models/Transformers](https://huggingface.co/docs/transformers/quicktour) (recent advances in ML).
