@@ -2,12 +2,12 @@ import numbers
 import random
 import time
 import zmq
+import sys
 
-num_bidders = 2
+num_bidders = int(sys.argv[1])
 needed_to_win = 3
 init_budget = 100
 item_types = ["Picasso", "Van_Gogh", "Rembrandt", "Da_Vinci"]
-
 
 # timing
 between_rounds = 0.01
