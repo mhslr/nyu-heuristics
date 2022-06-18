@@ -42,9 +42,9 @@ def single_double_paintings(info):
     return single, double
 
 
-def block_others(info, original_bid):
+def block_others(info):
     """
-    if an opponent is about to win, increase original_bid to be above their budget
+    if an opponent is about to win, bid above their budget
     """
     cur_item = info["items"][info["cur_round"]]
     opponents = info["others"]
@@ -54,11 +54,14 @@ def block_others(info, original_bid):
         for player in opponents
         if player["item_count"][cur_item] == 2
     ]
-    return max([original_bid] + blocks)
+    return max([0] + blocks)
 
 
-def compete_first(others, want):
-    """ we will compete for our first painting """
+def compete_for_first(others, want):
+    """
+    compete for our first painting
+    bidding according to others budget
+    """
     if len(others) == 1:
         other_budget = others[0]["budget"]
         return other_budget // 3 + 1
@@ -79,12 +82,6 @@ def compute_bid_noblock(info):
     others = info["others"]
     min_bid = 2
 
-    """
-    I believe the original code/logic was incorrect:
-    if we owned at least one painting of some artist,
-    we would set priority = first artist to appear twice
-    """
-
     # top priority == want
     _, want = artists_by_3rd(info)[0]
     single, double = single_double_paintings(info)
@@ -96,12 +93,11 @@ def compute_bid_noblock(info):
         return min_bid
 
     if cur_item == want and my_coll[cur_item] == 1:
-        # get the second one
-        return int(0.4 * my_budget)
+        return int(0.4 * my_budget) # leave 60% for last bid
 
     if cur_item == want and my_coll[cur_item] == 0:
         # we extracted this logic into its own function
-        return max(compete_first(others, want), 20)
+        return max(compete_for_first(others, want), 20)
 
     return min_bid
 
@@ -110,10 +106,10 @@ def compute_bid_withblock(info):
     # simplify logic by making sure we block
     others = info["others"]
     bid = compute_bid_noblock(info)
-    block = block_others(info, bid)
+    block = block_others(info)
 
     if len(others) <= 2 or block <= my_budget // 2:
-        return block
+        return max(bid, block)
     return bid
 
 
