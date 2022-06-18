@@ -6,9 +6,10 @@ import random
 import uuid
 
 import sample_strat
+
 my_name = sys.argv[1]
-strat = {'sample_strat': sample_strat}[my_name]
-my_name += '_' + uuid.uuid4().hex[:5]
+strat = {"sample_strat": sample_strat}[my_name]
+my_name += "_" + uuid.uuid4().hex[:5]
 
 context = zmq.Context()
 socket = context.socket(zmq.REQ)
@@ -29,7 +30,7 @@ while True:
 
     if response["type"] == "info":
         info = response.copy()
-        if info['cur_round'] == 0:
+        if info["cur_round"] == 0:
             state = None
         round_msg(info)
         # we recieved the latest info, we can compute and place our bid
@@ -46,7 +47,7 @@ while True:
         time.sleep(0.1)
 
     elif response["type"] == "done":
-        print('done', response)
+        print("done", response)
         break
 
     else:

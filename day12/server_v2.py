@@ -96,8 +96,10 @@ def answer_phase2(req, cur_round, bids):
 
 game_winners = []
 for game in range(20):
-    print('game', game)
-    items = random.choices(item_types, k=num_bidders * needed_to_win * len(item_types) + 1)
+    print("game", game)
+    items = random.choices(
+        item_types, k=num_bidders * needed_to_win * len(item_types) + 1
+    )
     history = []
     players = {}
     for player in player_names:
@@ -131,6 +133,7 @@ for game in range(20):
         time.sleep(between_rounds)
 
 from collections import Counter
+
 print(Counter(game_winners))
 for i in range(num_bidders):
     request = socket.recv_json()
