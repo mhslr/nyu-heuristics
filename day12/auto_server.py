@@ -7,12 +7,12 @@ init_budget = 100
 item_types = ["Picasso", "Van_Gogh", "Rembrandt", "Da_Vinci"]
 
 import sample_strat
-import ahmad
+import ahmad_sarah
 
 bots = [
     ("random1", sample_strat.compute_bid_state),
     ("random2", sample_strat.compute_bid_state),
-    ("ahmad", ahmad.compute_bid_state),
+    ("ahmad_sarah", ahmad_sarah.compute_bid_state),
 ]
 
 
